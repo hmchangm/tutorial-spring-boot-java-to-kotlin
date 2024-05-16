@@ -9,19 +9,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class AuthorMapperImpl implements Mapper<AuthorEntity, AuthorDto> {
 
-    private ModelMapper modelMapper;
-
-    public AuthorMapperImpl(ModelMapper modelMapper) {
-        this.modelMapper = modelMapper;
-    }
-
     @Override
     public AuthorDto mapTo(AuthorEntity authorEntity) {
-        return modelMapper.map(authorEntity, AuthorDto.class);
+        if (authorEntity == null) return null;
+        return new AuthorDto(authorEntity.getId(), authorEntity.getName(), authorEntity.getAge());
     }
 
     @Override
     public AuthorEntity mapFrom(AuthorDto authorDto) {
-        return modelMapper.map(authorDto, AuthorEntity.class);
+        if (authorDto == null) return null;
+        return new AuthorEntity(authorDto.getId(), authorDto.getName(), authorDto.getAge());
     }
 }
